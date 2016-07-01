@@ -1,0 +1,57 @@
+
+<!doctype html>
+<html>
+   
+   <head>
+      <title>Assign 2</title>
+      <!-- Create a constants service and show its usage in a controller -->
+
+
+      <!-- Latest compiled and minified JavaScript -->
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+      <!-- Optional theme -->
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+      <script src = "http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+      <script>
+         var myapp = angular.module("myapp", []);
+                 
+         myapp.constant("dollar","67.2");            // constant directive //dollar price set to 67.2
+         myapp.value("defaultInput", 5);
+         
+         myapp.service('MathService', function() {
+            var service = {};
+            service.multiply = function(a, b) {
+               return a * b;
+            }
+            return service;
+         });
+          myapp.controller('CalcController', function($scope, CalcService, dollar,defaultInput) {
+            $scope.number = defaultInput;
+            $scope.result = CalcService.calc($scope.number);
+            $scope.calc = function() {
+               $scope.result = CalcService.calc($scope.number);
+            }
+         });
+         
+        myapp.service('CalcService', function(MathService,dollar){
+            this.calc = function(a) {
+               return ( MathService.multiply(dollar, a ) );
+            }
+         });  
+         
+      </script>
+   </head>   
+   <body ng-app = "myapp">
+     
+      <div class="container" ng-controller = "CalcController">
+          <center><h2>Dollar to Rs converter</h2></center>
+         <center><p>Enter total dollar : <input type = "number" ng-model = "number" /></p></center>
+         <br>
+         <center><button ng-click = "calc()"> calculate </button></center>
+         <br><br><br>
+        <b><center> <p>Amount in Rs : {{result}}</p></center></b>
+      </div>
+              
+   </body>
+</html>
